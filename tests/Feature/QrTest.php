@@ -17,14 +17,20 @@ class QrTest extends TestCase
         $response->assertOk()->assertHeader('Content-Type', 'image/png');
     }
 
-    public function test_qr_png_has_valid_png_signature(): void
+    public function test_qr_png_is_a_valid_image_with_real_dimensions(): void
     {
         $emp = Employee::create(['first_name' => 'Alice', 'last_name' => 'Martin']);
         $png = $this->get(route('card.qr', $emp->slug))->getContent();
 
-        // A valid PNG always starts with the 8-byte PNG signature
+        // Must be a valid PNG (correct magic bytes)
         $this->assertEquals("\x89PNG\r\n\x1a\n", substr($png, 0, 8), 'Response is not a valid PNG');
-        $this->assertGreaterThan(1000, strlen($png), 'PNG is suspiciously small — may be a placeholder');
+
+        // Must be a decodable image with reasonable dimensions (not a 1x1 error stub)
+        $info = getimagesizefromstring($png);
+        $this->assertNotFalse($info, 'PNG could not be decoded as an image');
+        $this->assertEquals('image/png', $info['mime']);
+        $this->assertGreaterThan(50, $info[0], 'QR image width is too small');
+        $this->assertGreaterThan(50, $info[1], 'QR image height is too small');
     }
 
     public function test_qr_is_stable_after_employee_update(): void
