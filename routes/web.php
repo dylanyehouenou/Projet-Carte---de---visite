@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\ImportController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\PublicCardController;
+use App\Http\Controllers\WalletController;
 use Illuminate\Support\Facades\Route;
 
 // Auth (before wildcard routes)
@@ -38,4 +39,6 @@ Route::get('/', fn() => redirect()->route('admin.login'));
 Route::get('/{slug}/vcard', [PublicCardController::class, 'vcard'])->name('card.vcard');
 Route::get('/{slug}/qr', [PublicCardController::class, 'qrPng'])->name('card.qr');
 Route::get('/{slug}/photo', [PhotoController::class, 'show'])->name('card.photo');
+Route::get('/{slug}/apple-wallet', [WalletController::class, 'apple'])->name('card.apple-wallet');
+Route::get('/{slug}/google-wallet', [WalletController::class, 'google'])->name('card.google-wallet');
 Route::get('/{slug}', [PublicCardController::class, 'show'])->name('card.show');
