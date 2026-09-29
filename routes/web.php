@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\Route;
 // Auth (before wildcard routes)
 Route::middleware('guest')->group(function () {
     Route::get('/admin/login', [LoginController::class, 'showForm'])->name('admin.login');
-    Route::post('/admin/login', [LoginController::class, 'login'])->name('admin.login.post');
+    Route::post('/admin/login', [LoginController::class, 'login'])
+        ->name('admin.login.post')
+        ->middleware('throttle:10,1');
 });
 
 Route::post('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout')->middleware('auth');

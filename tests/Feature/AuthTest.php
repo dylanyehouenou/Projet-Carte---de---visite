@@ -4,11 +4,18 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\RateLimiter;
 use Tests\TestCase;
 
 class AuthTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        RateLimiter::clear('login.' . request()->ip());
+    }
 
     public function test_login_form_is_accessible(): void
     {
@@ -49,5 +56,24 @@ class AuthTest extends TestCase
             ->post(route('admin.logout'))
             ->assertRedirect(route('admin.login'));
         $this->assertGuest();
+    }
+
+    public function test_brute_force_is_rate_limited(): void
+    {
+        // Make 10 failed login attempts (the limit)
+        for ($i = 0; $i < 10; $i++) {
+            $this->post(route('admin.login.post'), [
+                'email'    => 'attacker@test.fr',
+                'password' => 'wrong' . $i,
+            ]);
+        }
+
+        // The 11th attempt must be throttled (429)
+        $response = $this->post(route('admin.login.post'), [
+            'email'    => 'attacker@test.fr',
+            'password' => 'wrong11',
+        ]);
+
+        $response->assertStatus(429);
     }
 }
