@@ -59,12 +59,12 @@ Concevoir l’expérience utilisateur et l’interface de la plateforme MMI’e 
 
 ## Handoff
 
-FEATURE:
-PAGE:
-COMPONENTS:
-FILES:
-BEHAVIOR:
-API/BACKEND DEPENDENCIES:
-RESPONSIVE NOTES:
-ACCESSIBILITY:
-CLAUDE ACTION:
+FEATURE: Refonte UI/UX complète (Côté public & Back-office Admin) avec Tailwind CSS v4.
+PAGE: Carte publique, Carte désactivée, Erreur 404, Login, Dashboard Admin, Gestion Collaborateurs (Index, Show, Edit), Gestion Imports (Index, Create, Show).
+COMPONENTS: Cartes profils, bannières avec logo, tableaux de données responsives, formulaires, alertes de succès/erreur, stat cards.
+FILES: `public/card.blade.php`, `public/disabled.blade.php`, `errors/404.blade.php`, `layouts/app.blade.php`, `layouts/admin.blade.php`, `auth/login.blade.php`, `admin/dashboard.blade.php`, `admin/employees/index.blade.php`, `admin/employees/show.blade.php`, `admin/employees/edit.blade.php`, `admin/imports/index.blade.php`, `admin/imports/create.blade.php`, `admin/imports/show.blade.php`.
+BEHAVIOR: Transitions au survol, animations au clic (active:scale), confirmation native (JS confirm) sur les boutons destructeurs, preview du nom de fichier CSV via JS natif.
+API/BACKEND DEPENDENCIES: Toutes les variables dynamiques existantes, routes backend, paginations et directives Blade conservées à l'identique.
+RESPONSIVE NOTES: Approche mobile-first globale. Vues publiques capées à `max-w-sm`. Interface Admin capée à `max-w-7xl` avec des grilles (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`) adaptatives.
+ACCESSIBILITY: Police *Plus Jakarta Sans* lisible, contrastes renforcés (textes `slate-500` à `slate-900`), états de focus visibles sur les champs de formulaire (`focus:ring`).
+CLAUDE ACTION: Intégrer les fichiers `.blade.php` fournis sans toucher aux contrôleurs. Aucun ajustement backend n'est requis si les variables Blade n'ont pas été modifiées côté serveur.
