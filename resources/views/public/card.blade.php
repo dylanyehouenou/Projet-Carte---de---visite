@@ -6,11 +6,11 @@
 <div class="min-h-screen flex items-center justify-center py-10 px-4 sm:px-6">
     <div class="bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.08)] w-full max-w-sm overflow-hidden border border-slate-100">
 
-        {{-- Header / Cover (Bannière MMI'e) --}}
-        <div class="h-32 bg-gradient-to-tr from-[#003189] via-[#0047c8] to-[#005deb] relative overflow-hidden">
-            <!-- Cercles décoratifs subtils -->
+        {{-- Header / Cover (Bannière MMI'e avec logo) --}}
+        <div class="h-32 bg-gradient-to-tr from-[#003189] via-[#0047c8] to-[#005deb] relative overflow-hidden flex justify-center pt-5">
             <div class="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
             <div class="absolute bottom-0 left-4 w-24 h-24 bg-black/10 rounded-full blur-xl"></div>
+            <span class="text-white/90 font-extrabold tracking-widest text-lg drop-shadow-sm z-10">MMI'e</span>
         </div>
 
         {{-- Section Profil (Photo chevauchante) --}}
@@ -37,10 +37,10 @@
                 @endif
             </div>
 
-            {{-- Action Principale (Ajout rapide de contact) --}}
+            {{-- Action Principale --}}
             <div class="mt-6">
                 <a href="{{ route('card.vcard', $employee->slug) }}"
-                   class="flex items-center justify-center gap-2.5 w-full bg-[#003189] hover:bg-[#002266] text-white rounded-2xl px-5 py-3.5 text-sm font-semibold shadow-lg shadow-blue-900/20 transition-all active:scale-[0.98]">
+                   class="flex items-center justify-center gap-2.5 w-full bg-[#003189] hover:bg-[#002266] text-white rounded-2xl px-5 py-3.5 text-sm font-semibold shadow-lg shadow-[#003189]/20 transition-all active:scale-[0.98]">
                     <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
                     </svg>
@@ -49,7 +49,7 @@
             </div>
         </div>
 
-        {{-- Détails de contact (Liste stylisée) --}}
+        {{-- Détails de contact --}}
         <div class="px-6 py-2 flex flex-col gap-3">
 
             @if($employee->email)
@@ -114,7 +114,7 @@
 
         </div>
 
-        {{-- Bas de carte (QR Code & Site web) --}}
+        {{-- Bas de carte --}}
         <div class="mt-4 border-t border-slate-100 bg-slate-50/50 p-6">
             <div class="flex flex-col items-center">
                 <div class="bg-white p-2.5 rounded-2xl shadow-sm border border-slate-100 mb-3">
