@@ -14,6 +14,7 @@ class Employee extends Model
         'external_key', 'first_name', 'last_name', 'job_title', 'department',
         'email', 'phone', 'postal_address', 'website', 'photo_path',
         'linkedin_url', 'calendly_url', 'is_active', 'deactivated_at',
+        'organization_id', 'group_id',
     ];
 
     protected function casts(): array
@@ -46,6 +47,21 @@ class Employee extends Model
             $i++;
         }
         return $slug;
+    }
+
+    public function organization(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Organization::class);
+    }
+
+    public function group(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Group::class);
+    }
+
+    public function employeeCard(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(EmployeeCard::class);
     }
 
     public function scopeActive($query)

@@ -4,6 +4,10 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\ImportController;
+use App\Http\Controllers\Admin\MediaController;
+use App\Http\Controllers\Admin\OrganizationController;
+use App\Http\Controllers\Admin\GroupController;
+use App\Http\Controllers\Admin\CardController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\PublicCardController;
 use App\Http\Controllers\WalletController;
@@ -30,6 +34,31 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', \App\Http\Middleware
     Route::get('imports/create', [ImportController::class, 'create'])->name('imports.create');
     Route::post('imports', [ImportController::class, 'store'])->name('imports.store');
     Route::get('imports/{import}', [ImportController::class, 'show'])->name('imports.show');
+
+    // Media
+    Route::get('media', [MediaController::class, 'index'])->name('media.index');
+    Route::post('media', [MediaController::class, 'store'])->name('media.store');
+    Route::get('media/{medium}/thumb', [MediaController::class, 'thumb'])->name('media.thumb');
+    Route::get('media/{medium}', [MediaController::class, 'show'])->name('media.show');
+    Route::delete('media/{medium}', [MediaController::class, 'destroy'])->name('media.destroy');
+
+    // Organizations
+    Route::resource('organizations', OrganizationController::class)->except(['show']);
+
+    // Groups
+    Route::resource('groups', GroupController::class)->except(['show']);
+
+    // Cards
+    Route::get('cards', [CardController::class, 'index'])->name('cards.index');
+    Route::get('cards/create', [CardController::class, 'create'])->name('cards.create');
+    Route::post('cards', [CardController::class, 'store'])->name('cards.store');
+    Route::get('cards/templates', [CardController::class, 'templates'])->name('cards.templates');
+    Route::post('cards/from-template', [CardController::class, 'fromTemplate'])->name('cards.from-template');
+    Route::post('cards/generate', [CardController::class, 'generate'])->name('cards.generate');
+    Route::get('cards/{card}/builder', [CardController::class, 'builder'])->name('cards.builder');
+    Route::post('cards/{card}/config', [CardController::class, 'saveConfig'])->name('cards.save-config');
+    Route::get('cards/{card}/preview', [CardController::class, 'preview'])->name('cards.preview');
+    Route::post('cards/{card}/publish', [CardController::class, 'publish'])->name('cards.publish');
 });
 
 // Public homepage

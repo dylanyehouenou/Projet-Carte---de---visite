@@ -58,7 +58,9 @@ class CsvImportService
                         $report['created'][] = ['id' => $employee->id, 'name' => $employee->fullName()];
                     } else {
                         $processedIds[] = $employee->id;
-                        $fillable = array_diff_key($mapped, array_flip(['slug', 'qr_token']));
+                        // Only update CSV-origin fields — never overwrite local customizations
+                        $csvFields = ['external_key', 'first_name', 'last_name', 'job_title', 'department', 'email', 'phone', 'postal_address', 'website'];
+                        $fillable = array_intersect_key($mapped, array_flip($csvFields));
                         $changed = false;
                         foreach ($fillable as $key => $value) {
                             if ($employee->$key !== $value) {
